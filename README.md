@@ -85,6 +85,45 @@ Example Add:
 
 See checkers code at sources/checkers directory.
 
+## Introducing Rust
+
+Rust started in 2006 as Graydon Hoare’s personal project while he was
+working for Mozilla. Mozilla sponsored it in 2009 and announced it in 2010.
+
+> Rust is a systems programming language that runs blazingly fast, prevents seg-
+faults, and guarantees thread safety.
+
+### Install rustup:
+
+$ rustc --version
+rustc 1.30.1 (1433507eb 2018-11-07)
+
+### Install the WebAssembly target for Ruth:
+
+$ rustup target add wasm32-unknown-unknown
+$ rustup target list
+
+### Creating a WebAssembly project:
+
+$ cargo new --lib rustwasmhello
+
+$ cargo new --lib rustycheckers
+
+
+## Integrating WebAssembly with JavaScript
+
+wasm-bindgen:
+
+wasm-bindgen injects a bunch of metadata into your compiled
+WebAssembly module. Then, a separate command-line tool reads that meta-
+data, strips it out, and uses that information to generate an appropriate
+JavaScript "wrapper bridge" containing the kinds of functions, classes, and
+other primitives that the developer wants bound to Rust.
+
+$ rustup toolchain add nightly
+$ rustup default nightly
+$ cargo +nightly install wasm-bindgen-cli
+
 
 
 ## References
