@@ -120,9 +120,14 @@ data, strips it out, and uses that information to generate an appropriate
 JavaScript "wrapper bridge" containing the kinds of functions, classes, and
 other primitives that the developer wants bound to Rust.
 
-$ rustup toolchain add nightly
-$ rustup default nightly
-$ cargo +nightly install wasm-bindgen-cli
+
+Example bindgenhello:
+
+$ npm install
+$ npm run build-release --> See package.json
+$ npm run serve
+
+Open http://localhost:8080
 
 
 
