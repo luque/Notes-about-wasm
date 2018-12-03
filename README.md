@@ -130,8 +130,22 @@ $ npm run serve
 Open http://localhost:8080
 
 
+### Rogue WebAssembly game
+
+Example in rogue directory:
+
+$ npm install
+$ npm run build-release --> See package.json
+$ npm run serve
+
+Open http://localhost:8080
+
+
+
 
 ## References
 
+- WebAssembly site: https://webassembly.org/
+- Awesome WebAssembly: https://github.com/mbasso/awesome-wasm
 - Conway's Game of Life in Rust and WebAssembly: https://rustwasm.github.io/book/introduction.html
 - Gate Demo game: https://github.com/SergiusIW/gate_demo
