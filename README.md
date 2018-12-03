@@ -66,3 +66,28 @@ can never access any of the host’s memory.
 
 ## Building a WebAssembly application
 
+Install the WebAssembly Binary Toolkit (WABT, pronounced "wabbit"): 
+https://github.com/WebAssembly/wabt
+
+Example Add:
+
+```
+(module
+  (func $add (param $lhs i32) (param $rhs i32) (result i32)
+    get_local $lhs
+    get_local $rhs
+    i32.add)
+  (export "add" (func $add))
+)
+```
+
+## Building WebAssembly Checkers
+
+See checkers code at sources/checkers directory.
+
+
+
+## References
+
+- Conway's Game of Life in Rust and WebAssembly: https://rustwasm.github.io/book/introduction.html
+- Gate Demo game: https://github.com/SergiusIW/gate_demo
