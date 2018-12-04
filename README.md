@@ -210,7 +210,29 @@ Anytime you make changes and want them reflected on http://localhost:8080/, just
 
 ### Implementing Life
 
+#### Designing the interface between Rust and JavaScript
 
+As a general rule of thumb, a good JavaScript<->WebAssembly interface design is often one where large, long-lived data structures are implemented as Rust types that live in the WebAssembly linear memory, and are exposed to JavaScript as opaque handles. JavaScript calls exported WebAssembly functions that take these opaque handles, transform their data, perform heavy computations, query the data, and ultimately return a small, copy-able result. By only returning the small result of the computation, we avoid copying and/or serializing everything back and forth between the JavaScript garbage-collected heap and the WebAssembly linear memory.
+
+We can represent the universe as a flat array that lives in the WebAssembly linear memory, and has a byte for each cell. 0 is a dead cell and 1 is a live cell.
+
+To find the array index of the cell at a given row and column in the universe, we can use this formula:
+
+```index(row, column, universe) = row * width(universe) + column```
+
+We have several ways of exposing the universe's cells to JavaScript. To begin, we will implement std::fmt::Display for Universe, which we can use to generate a Rust String of the cells rendered as text characters. This Rust String is then copied from the WebAssembly linear memory into a JavaScript String in the JavaScript's garbage-collected heap, and is then displayed by setting HTML textContent. Later in the chapter, we'll evolve this implementation to avoid copying the universe's cells between heaps and to render to <canvas>.
+
+#### Rust implementation
+
+See at `sources/wasm-game-of-life/src/lib.rs`.
+
+#### Rendering with JavaScript
+
+#### Rendering to Canvas Directly from Memory
+
+Generating (and allocating) a String in Rust and then having wasm-bindgen convert it to a valid JavaScript string makes unnecessary copies of the universe's cells. As the JavaScript code already knows the width and height of the universe, and can read WebAssembly's linear memory that make up the cells directly, we'll modify the render method to return a pointer to the start of the cells array.
+
+By working with pointers and overlays, we avoid copying the cells across the boundary on every tick.
 
 
 
