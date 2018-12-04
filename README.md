@@ -140,12 +140,85 @@ $ npm run serve
 
 Open http://localhost:8080
 
+## Advanced JavaScript integration with Yew
+
+
+Yew (pronounced /juː/, the same way as "you") is a modern Rust framework inspired by Elm and ReactJS for creating multi-threaded frontend apps with WebAssembly.
+
+The framework supports multi-threading & concurrency out of the box. It uses Web Workers API to spawn actors (agents) in separate threads and uses a local scheduler attached to a thread for concurrent tasks.
+
+Project at GitHub: https://github.com/DenisKolodin/yew
+
+
+## Rust and WebAssembly Tutorial (Game of Life)
+
+
+```$ cargo generate --git https://github.com/rustwasm/wasm-pack-template -n wasm-game-of-life
+wasm-game-of-life $ wasm-pack build
+wasm-game-of-life $ npm init wasm-app www
+```
+
+This package.json comes pre-configured with webpack and webpack-dev-server dependencies, as well as a dependency on hello-wasm-pack, which is a version of the initial wasm-pack-template package that has been published to npm.
+
+```
+wasm-game-of-life/www $ npm install
+```
+
+### Using our local wasm-game-of-life package in www:
+
+Rather than use the hello-wasm-pack package from npm, we want to use our local wasm-game-of-life package instead. This will allow us to incrementally develop our Game of Life program.
+
+First, run npm link inside the wasm-game-of-life/pkg directory, so that the local package can be depended upon by other local packages without publishing them to npm:
+
+```
+npm link
+```
+
+Second, use the npm linked version of the wasm-game-of-life from the www package by running this command within wasm-game-of-life/www:
+
+```
+npm link wasm-game-of-life
+```
+
+Finally, modify wasm-game-of-life/www/index.js to import wasm-game-of-life instead of the hello-wasm-pack package:
+
+```
+import * as wasm from "wasm-game-of-life";
+
+wasm.greet();
+```
+
+The problem in NixOS is that the nodejs global directory is a read-only file system. Workaround:
+
+
+It is possible to make a workaround for this by having a custom prefix inside ~/.npmrc. So if you create ~/.npmrc with content:
+
+```
+  prefix=~/.npm
+```
+
+Next time your run npm link or npm install -g, it would use ~/.npm as root folder.
+
+### Serving locally
+
+```
+www $ npm run start
+```
+
+Anytime you make changes and want them reflected on http://localhost:8080/, just re-run the wasm-pack build command within the wasm-game-of-life directory.
+
+
+### Implementing Life
+
+
 
 
 
 ## References
 
 - WebAssembly site: https://webassembly.org/
+- Yew Rust framework for building client web apps: https://github.com/DenisKolodin/yew
 - Awesome WebAssembly: https://github.com/mbasso/awesome-wasm
 - Conway's Game of Life in Rust and WebAssembly: https://rustwasm.github.io/book/introduction.html
 - Gate Demo game: https://github.com/SergiusIW/gate_demo
+- A Cartoon Intro to WebAssembly: https://hacks.mozilla.org/2017/02/a-cartoon-intro-to-webassembly/
