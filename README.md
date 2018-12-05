@@ -234,6 +234,15 @@ Generating (and allocating) a String in Rust and then having wasm-bindgen conver
 
 By working with pointers and overlays, we avoid copying the cells across the boundary on every tick.
 
+#### Time profiling
+
+1. Creating a Frames Per Second timer with window.performance.now
+2. Time each Universe::tick with console.time and console.timeEnd
+
+Gecko profiler installed from https://perf-html.io/
+See also https://developer.mozilla.org/en-US/docs/Mozilla/Performance/Profiling_with_the_Built-in_Profiler
+
+3. Microbenchmarks with cargo-benchcmp: https://github.com/BurntSushi/cargo-benchcmp
 
 
 ## References
